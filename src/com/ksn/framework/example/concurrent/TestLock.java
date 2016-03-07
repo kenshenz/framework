@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestLock {
 
 	public static void main(String[] args) {
-		BoundedBuffer bb = new BoundedBuffer();
+		/*BoundedBuffer bb = new BoundedBuffer();
 		Thread t1 = new Thread(new Runnable(){
 			@Override
 			public void run() {
@@ -35,7 +35,7 @@ public class TestLock {
 		});
 		
 		t1.start();
-		t2.start();
+		t2.start();*/
 	}
 
 }

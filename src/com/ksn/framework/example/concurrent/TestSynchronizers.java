@@ -14,7 +14,7 @@ public class TestSynchronizers {
 	
 	
 	public static void main(String[] args) {
-		Account account = new Account();
+		/*Account account = new Account();
 		
 		Thread t1 = new Thread(new Runnable() {
 			@Override
@@ -38,7 +38,7 @@ public class TestSynchronizers {
 		});
 		
 		t1.start();
-		t2.start();
+		t2.start();*/
 
 	}
 
