@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <configuration debug="true" scan="true" scanPeriod="30 seconds"> 自动重载logback配置 -->
+<configuration debug="true">
+
+	<property name="LOG_HOME" value="logs"></property>
+	<property name="APP_NAME" value="framework"></property>
+
+	<!-- 定义控制台输出格式 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger : %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 定义控制台输出格式~~ -->
+
+	<!-- 定义文件输出格式 -->
+	<timestamp key="byDay" datePattern="yyyy-MM-dd"></timestamp>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_HOME}/${APP_NAME}.${byDay}.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger [%file:%line] : %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 定义文件输出格式~~ -->
+
+	<!-- 定义文件切割输出格式 -->
+	<appender name="FILE_ROLLING"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${APP_NAME}.log</file> <!-- 当天日志的输出路径 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${APP_NAME}.%d{yyyy-MM-dd}.log</fileNamePattern> <!-- 历史日志文件的切割命名 -->
+			<maxHistory>365</maxHistory> <!-- 保留365日的日志文件 -->
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger [%file:%line] : %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 定义文件切割输出格式~~ -->
+
+	<!-- 定义不同级别的输出格式 -->
+	<root level="debug">
+		<appender-ref ref="CONSOLE"></appender-ref>
+		<!-- <appender-ref ref="FILE"></appender-ref> -->
+		<appender-ref ref="FILE_ROLLING"></appender-ref>
+	</root>
+	<!-- 定义不同级别的输出格式~~ -->
+
+</configuration>
