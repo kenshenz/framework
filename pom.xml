@@ -3,32 +3,43 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ksn</groupId>
-	<artifactId>framework</artifactId>
+	<artifactId>ff</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	
-	<name>kenshen's framework</name>
+
+	<name>kenshen framework</name>
 	<url>http://maven.apache.org</url>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
-	<dependencyManagement>
-		<dependencies>
 
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>2.6.2</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+	<dependencies>
 	
+		<!-- 单元测试库 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Json库 -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+
+		<!-- 日期库 -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -36,15 +47,15 @@
 				<directory>resources</directory>
 			</resource>
 		</resources>
-		
+
 		<testSourceDirectory>test</testSourceDirectory>
 		<testResources>
 			<testResource>
 				<directory>resources</directory>
 			</testResource>
 		</testResources>
-		
-		
+
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -55,7 +66,7 @@
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
-				
+
 			</plugin>
 		</plugins>
 	</build>
