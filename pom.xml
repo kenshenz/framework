@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ksn</groupId>
-	<artifactId>ff</artifactId>
+	<artifactId>ksn-core</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
