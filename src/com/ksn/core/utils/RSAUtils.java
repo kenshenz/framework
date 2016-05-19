@@ -84,8 +84,8 @@ public class RSAUtils {
 	
 	/**
 	 * 使用公钥解密
-	 * @param cipherText 经过base64处理的密文内容
-	 * @param key 经过base64处理的公钥
+	 * @param cipherText 密文（base64编码）
+	 * @param key 公钥（base64编码）
 	 * @return 明文内容
 	 * @throws IllegalBlockSizeException
 	 * @throws BadPaddingException
@@ -114,8 +114,8 @@ public class RSAUtils {
 	/**
 	 * 使用公钥加密
 	 * @param plainText 明文内容
-	 * @param key 经过base64处理的公钥
-	 * @return 经过base64处理的密文内容
+	 * @param key 公钥（base64编码）
+	 * @return 密文（base64编码）
 	 * @throws NoSuchAlgorithmException
 	 * @throws InvalidKeySpecException
 	 * @throws NoSuchPaddingException
@@ -146,8 +146,18 @@ public class RSAUtils {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public static Map<String, Key> initKeys() throws NoSuchAlgorithmException {
+		return initKeys(1024);
+	}
+	
+	/**
+	 * 初始化RSA公钥/私钥对
+	 * @param keySize
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
+	public static Map<String, Key> initKeys(int keySize) throws NoSuchAlgorithmException {
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-		keyPairGenerator.initialize(1024);
+		keyPairGenerator.initialize(keySize);
 		KeyPair keyPair = keyPairGenerator.genKeyPair();
 		
 		PublicKey publicKey = keyPair.getPublic();
@@ -161,7 +171,7 @@ public class RSAUtils {
 	}
 	
 	/**
-	 * 返回经过base64处理的公钥
+	 * 公钥（base64编码）
 	 * @param keyMap
 	 * @return
 	 */
@@ -171,7 +181,7 @@ public class RSAUtils {
 	}
 	
 	/**
-	 * 返回经过base64处理的私钥
+	 * 私钥（base64编码）
 	 * @param keyMap
 	 * @return
 	 */
