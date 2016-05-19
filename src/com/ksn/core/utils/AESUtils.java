@@ -12,6 +12,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESUtils {
+	
+	private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
 
 	/**
 	 * AES加密，并输出base64字符串
@@ -32,7 +34,7 @@ public class AESUtils {
 			IllegalBlockSizeException, BadPaddingException {
 		byte[] keyBytes = key.getBytes("utf-8");
 		SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
-		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
 		cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
 		byte[] result = cipher.doFinal(plainText.getBytes("utf-8"));
 		return Base64.getEncoder().encodeToString(result);
@@ -56,7 +58,7 @@ public class AESUtils {
 			IllegalBlockSizeException, BadPaddingException {
 		byte[] keyBytes = key.getBytes("utf-8");
 		SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
-		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
 		cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
 		byte[] result = cipher.doFinal(Base64.getDecoder().decode(cipherText));
 		return new String(result, "utf-8");
