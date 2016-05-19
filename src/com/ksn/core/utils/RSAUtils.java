@@ -1,7 +1,5 @@
 package com.ksn.core.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -9,19 +7,20 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RSAUtils {
+	
+	private static Logger logger = LoggerFactory.getLogger(RSAUtils.class);
 	
 	private static final String PRIVATE_KEY = "RSAPrivateKey";
 	private static final String PUBLIC_KEY = "RSAPublicKey";
@@ -31,27 +30,21 @@ public class RSAUtils {
 	 * @param cipherText 密文（base64编码）
 	 * @param key 私钥（base64编码）
 	 * @return 明文内容
-	 * @throws IllegalBlockSizeException
-	 * @throws BadPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
-	 * @throws InvalidKeySpecException
-	 * @throws NoSuchPaddingException
-	 * @throws UnsupportedEncodingException 
 	 */
-	public static String decryptByPrivateKey(String cipherText, String key)
-			throws IllegalBlockSizeException, BadPaddingException,
-			NoSuchAlgorithmException, InvalidKeyException,
-			InvalidKeySpecException, NoSuchPaddingException,
-			UnsupportedEncodingException {
+	public static String decryptByPrivateKey(String cipherText, String key) {
 		byte[] keyBytes = Base64.getDecoder().decode(key);
 		PKCS8EncodedKeySpec pck8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PrivateKey privateKey = keyFactory.generatePrivate(pck8KeySpec);
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		byte[] result = cipher.doFinal(Base64.getDecoder().decode(cipherText));
-		return new String(result, "utf-8");
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PrivateKey privateKey = keyFactory.generatePrivate(pck8KeySpec);
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.DECRYPT_MODE, privateKey);
+			byte[] result = cipher.doFinal(Base64.getDecoder().decode(cipherText));
+			return new String(result, "utf-8");
+		} catch (Exception e) {
+			logger.error("", e);
+			return "";
+		}
 	}
 	
 	/**
@@ -59,27 +52,21 @@ public class RSAUtils {
 	 * @param plainText 明文
 	 * @param key 私钥（base64编码）
 	 * @return 密文（base64编码）
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeySpecException
-	 * @throws NoSuchPaddingException
-	 * @throws InvalidKeyException
-	 * @throws IllegalBlockSizeException
-	 * @throws BadPaddingException
-	 * @throws UnsupportedEncodingException
 	 */
-	public static String encryptByPrivateKey(String plainText, String key)
-			throws NoSuchAlgorithmException, InvalidKeySpecException,
-			NoSuchPaddingException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException,
-			UnsupportedEncodingException {
+	public static String encryptByPrivateKey(String plainText, String key) {
 		byte[] keyBytes = Base64.getDecoder().decode(key);
 		PKCS8EncodedKeySpec pck8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PrivateKey privateKey = keyFactory.generatePrivate(pck8KeySpec);
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-		byte[] result = cipher.doFinal(plainText.getBytes("utf-8"));
-		return Base64.getEncoder().encodeToString(result);
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PrivateKey privateKey = keyFactory.generatePrivate(pck8KeySpec);
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+			byte[] result = cipher.doFinal(plainText.getBytes("utf-8"));
+			return Base64.getEncoder().encodeToString(result);
+		} catch (Exception e) {
+			logger.error("", e);
+			return "";
+		}
 	}
 	
 	/**
@@ -87,28 +74,22 @@ public class RSAUtils {
 	 * @param cipherText 密文（base64编码）
 	 * @param key 公钥（base64编码）
 	 * @return 明文内容
-	 * @throws IllegalBlockSizeException
-	 * @throws BadPaddingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeyException
-	 * @throws InvalidKeySpecException
-	 * @throws NoSuchPaddingException
-	 * @throws UnsupportedEncodingException
 	 */
-	public static String decryptByPublicKey(String cipherText, String key)
-			throws IllegalBlockSizeException, BadPaddingException,
-			NoSuchAlgorithmException, InvalidKeyException,
-			InvalidKeySpecException, NoSuchPaddingException,
-			UnsupportedEncodingException {
+	public static String decryptByPublicKey(String cipherText, String key) {
 		byte[] keyBytes = Base64.getDecoder().decode(key);
 		//公钥要用X509EncodeKeySpec或者RSAPublicKeySpec
 		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.DECRYPT_MODE, publicKey);
-		byte[] result = cipher.doFinal(Base64.getDecoder().decode(cipherText));
-		return new String(result, "utf-8");
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.DECRYPT_MODE, publicKey);
+			byte[] result = cipher.doFinal(Base64.getDecoder().decode(cipherText));
+			return new String(result, "utf-8");
+		} catch (Exception e) {
+			logger.error("", e);
+			return "";
+		}
 	}
 	
 	/**
@@ -116,28 +97,22 @@ public class RSAUtils {
 	 * @param plainText 明文内容
 	 * @param key 公钥（base64编码）
 	 * @return 密文（base64编码）
-	 * @throws NoSuchAlgorithmException
-	 * @throws InvalidKeySpecException
-	 * @throws NoSuchPaddingException
-	 * @throws InvalidKeyException
-	 * @throws IllegalBlockSizeException
-	 * @throws BadPaddingException
-	 * @throws UnsupportedEncodingException
 	 */
-	public static String encryptByPublicKey(String plainText, String key)
-			throws NoSuchAlgorithmException, InvalidKeySpecException,
-			NoSuchPaddingException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException,
-			UnsupportedEncodingException {
+	public static String encryptByPublicKey(String plainText, String key) {
 		byte[] keyBytes = Base64.getDecoder().decode(key);
 		//公钥要用X509EncodeKeySpec或者RSAPublicKeySpec
 		X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-		PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
-		Cipher cipher = Cipher.getInstance("RSA");
-		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		byte[] result = cipher.doFinal(plainText.getBytes("utf-8"));
-		return Base64.getEncoder().encodeToString(result);
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
+			Cipher cipher = Cipher.getInstance("RSA");
+			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+			byte[] result = cipher.doFinal(plainText.getBytes("utf-8"));
+			return Base64.getEncoder().encodeToString(result);
+		} catch (Exception e) {
+			logger.error("", e);
+			return "";
+		}
 	}
 	
 	/**
