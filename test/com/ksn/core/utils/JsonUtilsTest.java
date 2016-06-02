@@ -1,11 +1,8 @@
-package com.ksn.framework.utils;
-
-import static org.junit.Assert.*;
+package com.ksn.core.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import com.google.gson.Gson;
