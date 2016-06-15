@@ -1,0 +1,24 @@
+syntax = "proto3";
+package com.ksn.core.protobuf;
+
+option java_package = "com.ksn.core.protobuf";
+option java_out_classname = "SearchProto";
+
+message SearchRequest {
+	required string query = 1; // 每个属性都有一个唯一的tag，不能重复 1-15只用1个字节，16-2047用2个字节
+	required int32 page_number = 2;
+	optional int32 result_per_page = 3;
+}
+
+message SearchResponse {
+	string query = 1;
+	int32 page_number = 2;
+	int32 result_per_page = 3;
+	
+	reserved 9 to 11; //表示9到11不能用，可能是之前用过的
+	reserved "foo", "bar"; //也可以直接指定参数名
+}
+
+service Search {
+	rpc DoSearch(SearchRequest) returns (SearchResponse);
+}
