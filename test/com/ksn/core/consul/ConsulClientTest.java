@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.google.common.net.HostAndPort;
 import com.orbitz.consul.AgentClient;
 import com.orbitz.consul.CatalogClient;
 import com.orbitz.consul.Consul;
@@ -17,7 +18,7 @@ public class ConsulClientTest {
 
 	@Test
 	public void test() throws NotRegisteredException {
-		Consul consul = Consul.builder().build();
+		Consul consul = Consul.builder().withHostAndPort(HostAndPort.fromParts("192.168.22.100", 8500)).build();
 		AgentClient agentClient = consul.agentClient();
 
 		ImmutableRegistration regist = ImmutableRegistration.builder().id("1").name("MyService").address("192.168.1.99")
@@ -33,7 +34,7 @@ public class ConsulClientTest {
 
 	@Test
 	public void test2() {
-		Consul consul = Consul.builder().build();
+		Consul consul = Consul.builder().withHostAndPort(HostAndPort.fromParts("192.168.22.100", 8500)).build();
 		CatalogClient catalogClient = consul.catalogClient();
 		
 		ConsulResponse<Map<String, List<String>>> services = catalogClient.getServices();
