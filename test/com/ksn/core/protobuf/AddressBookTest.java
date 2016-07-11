@@ -27,11 +27,14 @@ public class AddressBookTest {
 			.addPerson(1, Person.newBuilder().setEmail("kenshenchan@gmail.com").setId(200).setName("kenshen"))
 			.build();
 		
-		AddressBook result = blockStub.showAddressBook(addressBook);
-		for (Person p : result.getPersonList()) {
-			System.out.println("person: email=" + p.getEmail() + "; name=" + p.getName());
+		for(int i = 0; i < 1; i++) {
+			AddressBook result = blockStub.showAddressBook(addressBook);
+			for (Person p : result.getPersonList()) {
+				System.out.println("person: email=" + p.getEmail() + "; name=" + p.getName());
+			}
+			System.out.println("result!");
 		}
-		System.out.println("result!");
+		
 		
 		channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
 	}

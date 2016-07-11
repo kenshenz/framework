@@ -46,8 +46,13 @@ public class GrpcServerTest {
 		@Override
 		public void showAddressBook(AddressBook request, StreamObserver<AddressBook> responseObserver) {
 			System.out.println("AddressBook Server");
-			for (Person p : request.getPersonList()) {
+			/*for (Person p : request.getPersonList()) {
 				System.out.println("person: email=" + p.getEmail() + "; name=" + p.getName());
+			}*/
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 			responseObserver.onNext(request);
 			responseObserver.onCompleted();
