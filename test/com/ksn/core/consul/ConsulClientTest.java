@@ -3,6 +3,7 @@ package com.ksn.core.consul;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.common.net.HostAndPort;
@@ -18,7 +19,7 @@ public class ConsulClientTest {
 
 	@Test
 	public void test() throws NotRegisteredException {
-		Consul consul = Consul.builder().withHostAndPort(HostAndPort.fromParts("192.168.22.100", 8500)).build();
+		Consul consul = Consul.builder().withHostAndPort(HostAndPort.fromParts("192.168.1.245", 8500)).build();
 		AgentClient agentClient = consul.agentClient();
 
 		ImmutableRegistration regist = ImmutableRegistration.builder().id("1").name("MyService").address("192.168.1.99")
@@ -33,6 +34,7 @@ public class ConsulClientTest {
 	}
 
 	@Test
+	@Ignore
 	public void test2() {
 		Consul consul = Consul.builder().withHostAndPort(HostAndPort.fromParts("192.168.22.100", 8500)).build();
 		CatalogClient catalogClient = consul.catalogClient();

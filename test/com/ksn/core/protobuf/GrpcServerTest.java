@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ksn.core.protobuf.AddressBookProto.AddressBook;
 import com.ksn.core.protobuf.AddressBookProto.Person;
+import com.ksn.core.protobuf.AddressBookServiceGrpc.AbstractAddressBookService;
 
 public class GrpcServerTest {
 	private static final Logger logger = LoggerFactory.getLogger(GrpcServerTest.class);
@@ -19,10 +20,10 @@ public class GrpcServerTest {
 	@Test
 	public void test() throws InterruptedException, IOException{
 		//server端
-		Server server = ServerBuilder.forPort(50051)
-					.addService(
+		Server server = ServerBuilder.forPort(50051).addService(new AddressBookServer())
+					/*.addService(
 							AddressBookServiceGrpc
-									.bindService(new AddressBookServer()))
+									.bindService(new AddressBookServer()))*/
 					.build().start();
 		System.out.println("Server started, listening on " + 50051);
 		
@@ -41,7 +42,7 @@ public class GrpcServerTest {
 		}
 	}
 	
-	public class AddressBookServer implements AddressBookServiceGrpc.AddressBookService {
+	public class AddressBookServer extends AbstractAddressBookService {
 
 		@Override
 		public void showAddressBook(AddressBook request, StreamObserver<AddressBook> responseObserver) {
