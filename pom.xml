@@ -104,6 +104,13 @@
 			<artifactId>consul-client</artifactId>
 			<version>0.12.3</version>
 		</dependency>
+		
+		<!-- nanomsg -->
+		<dependency>
+			<groupId>jnanomsg</groupId>
+			<artifactId>jnanomsg</artifactId>
+			<version>0.4.3</version>
+		</dependency>
 
 	</dependencies>
 
@@ -237,6 +244,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>clojars.org</id>
+			<url>http://clojars.org/repo</url>
 		</repository>
 	</repositories>
 	
