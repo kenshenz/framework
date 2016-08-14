@@ -115,6 +115,13 @@
 			<artifactId>consul-client</artifactId>
 			<version>0.12.3</version>
 		</dependency>
+		
+		<!-- nanomsg -->
+		<dependency>
+			<groupId>jnanomsg</groupId>
+			<artifactId>jnanomsg</artifactId>
+			<version>0.4.3</version>
+		</dependency>
 
 	</dependencies>
 
@@ -210,6 +217,26 @@
 						<version>4.0.0</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>test/com/ksn/core/ice</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin> -->
 			
 			
@@ -228,6 +255,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>clojars.org</id>
+			<url>http://clojars.org/repo</url>
 		</repository>
 	</repositories>
 	
