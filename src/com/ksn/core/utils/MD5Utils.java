@@ -10,7 +10,7 @@ public class MD5Utils {
 	
 	public static final Logger logger = LoggerFactory.getLogger(MD5Utils.class);
 	
-	public static final String MD5_SALT = "wenhuaju";
+	public static final String MD5_SALT = "kenshenz";
 	
 	/**
 	 * 使用md5算法加密字符串

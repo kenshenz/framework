@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 public @interface Worker {
 	
 	/**
-	 * Worker包名
+	 * Worker namespace
 	 * @return
 	 */
-	String packageName() default "";
+	String id() default "";
 	
 	/**
 	 * Worker名称

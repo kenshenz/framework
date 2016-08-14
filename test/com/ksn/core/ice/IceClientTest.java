@@ -18,7 +18,7 @@ public class IceClientTest {
 	@Test
 	public void test() {
 		Communicator ic = Util.initialize();
-		ObjectPrx proxy = ic.stringToProxy("SimplePrinter:default -p 10000");
+		ObjectPrx proxy = ic.stringToProxy("PrinterWorker:default -p 10000");
 		
 		PrinterIcePrx workerProxy = PrinterIcePrxHelper.checkedCast(proxy);
 		

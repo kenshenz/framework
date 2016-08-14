@@ -39,6 +39,10 @@ public class DateTimeUtils {
 		return new DateTime(date).toString(PATTERN_DATE);
 	}
 	
+	public static String date2string(Date date, String format) {
+		return new DateTime(date).toString(format);
+	}
+	
 	/**
 	 * 日期转字符串
 	 * 日期格式为yyyy-MM-dd HH:mm:ss
